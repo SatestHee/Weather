@@ -1,8 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Forecast from './Forecast';
 import './App.css';
-//import { ReactComponent as Logo } from './wind.svg'
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import OpacityIcon from '@material-ui/icons/Opacity';
@@ -95,7 +94,7 @@ function App() {
               <div className="error"> <p>{error}</p></div>
               <div className="location">
                 <LocationOnIcon /> <p>{weather.city}, {weather.country}</p></div>
-              <div className="time"> <p>{moment().format('hh:mm a, MMM Do YYYY')}</p></div>
+              <div className="time"> <p>{dayjs().format('MMM D, YYYY h:mm A')}</p></div>
               <a onClick={onClick} href="#">
                 <div className="tempature"> <p>{weather.tempature}{units === 'metric' ? '°C' : '°F'}</p></div>
               </a>
@@ -147,16 +146,16 @@ function App() {
                 </div>
                 <div className="weather-details-listItem">
                   <WbSunnyOutlinedIcon/>
-                  <div className="weather-details-title"> Sunrise </div>
+                  <div className="weather-details-title">Sunrise</div>
                   <div className="weather-details-data">
-                    <span>{moment.unix(weather.sunrise).format("hh:mm a")}</span>
+                    <span>{dayjs.unix(weather.sunrise).format("hh:mm a")}</span>
                   </div>
                 </div>
                 <div className="weather-details-listItem">
                   <WbSunnyRoundedIcon />
                   <div className="weather-details-title">Sunset</div>
                   <div className="weather-details-data">
-                    <span>{moment.unix(weather.sunset).format("hh:mm a")}</span>
+                    <span>{dayjs.unix(weather.sunset).format("hh:mm a")}</span>
                   </div>
                 </div>
               </div>

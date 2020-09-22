@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, createContext } from 'react';
 import { ForecastContext } from './App';
 import DailyChart from './DailyChart'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import './App.css'
 
 export const DailyData = createContext(null);
@@ -10,7 +10,7 @@ function Forecast() {
     const params = useContext(ForecastContext);
     const forcastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${params.latitude}&lon=${params.longitude}&units=${params.units}&appid=7f87ab11fbe404bb51f3e91e4f43251e`
     const [lists, setLists] = useState([])
-    const [hourlylists , setHourlylists]= useState([])
+    const [hourlylists, setHourlylists] = useState([])
     var getForecast = async () => {
         await fetch(forcastUrl)
             .then(status)
@@ -46,7 +46,7 @@ function Forecast() {
                         return (<li className="grid">
                             <div>
                                 <div className="forecast-date">
-                                    <span>{moment.unix(day.dt).format("MM/DD")}</span>
+                                    <span>{dayjs.unix(day.dt).format("ddd, MMM D")}</span>
                                 </div>
                                 <div className="icon">
                                     <img className="forecast-icon" src={`http://openweathermap.org/img/wn/` + `${day.weather[0].icon}` + `@2x.png`}></img>
@@ -60,7 +60,7 @@ function Forecast() {
                     })}
                 </ul>
             </div >
-            <DailyData.Provider value={hourlylists}>
+            <DailyData.Provider value={{ hourlylists, params }}>
                 <DailyChart />
             </DailyData.Provider>
         </div>

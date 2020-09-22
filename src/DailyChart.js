@@ -1,18 +1,20 @@
 import * as d3 from 'd3';
-import { text } from 'd3';
 import React, { useContext, useEffect, useRef } from 'react';
 import { DailyData } from './Forecast'
-
+import dayjs from 'dayjs'
 function DailyChart() {
     const ref = useRef()
-    var lists = useContext(DailyData)
-
+    const data = useContext(DailyData)
+    var lists = data.hourlylists
+    const units = data.params.units === 'metric' ? '°C' : '°F'
     var drawChart = () => {
         const svg = d3.select(ref.current)
         const margin = { top: 20, right: 20, bottom: 40, left: 60 }
         //set svg
         svg.attr("width", 600)
             .attr("height", 400)
+            .attr("overflow", "visible");
+
         //set margin left & top
         svg.select('#g')
             .attr("transform",
@@ -50,19 +52,19 @@ function DailyChart() {
         var focus = d3.select("#focus")
 
         focus.select(".tooltip")
-            .attr("width", 300)
+            .attr("width", 150)
             .attr("height", 50)
             .attr("x", 10)
             .attr("y", -22)
             .attr("rx", 4)
-            .attr("ry", 4);
+            .attr("ry", 4)
 
         focus.select(".tooltip-date")
             .attr("x", 18)
             .attr("y", -2);
 
         focus.select(".tooltip-temp")
-            .attr("x", 60)
+            .attr("x", 18)
             .attr("y", 18);
 
         svg.select("#overlay")
@@ -75,22 +77,18 @@ function DailyChart() {
         var bisectDate = d3.bisector((d) => d.dt).right;
 
         function mousemove(e, lists) {
-            var x0 = x.invert(e.pageX)
-            const index = bisectDate(lists, x0);
-            const a = lists[index - 25].dt
-            console.log('a', a)
-            const b = lists[index - 25].temp
-            console.log('a', b)
-            // svg.select('#dot')
-            //     .attr('cx', x(a))
-            //     .attr('cy', y(b))
+            var x0 = d3.pointer(e)
+            var x1 = x.invert(x0[0])
+            const index = bisectDate(lists, x1);
+            if (index === 0) return;
+            const a = lists[index - 1].dt
+            const b = lists[index - 1].temp
             focus.attr("transform", `translate(${x(a)},${y(b)})`)
             focus.select(".tooltip-date")
-                .text(d => 'SDate');
-
+                .text(dayjs(a).format("ddd, MMM D h:mm A"))
+            focus.select(".tooltip-temp")
+                .text('Tempature: ' + b + units)
         }
-
-
     }
 
 
@@ -109,10 +107,9 @@ function DailyChart() {
                         <path id="path"></path>
                         <g className="focus" id="focus" style={{ display: "none" }}>
                             <circle r="5" id="dot"></circle>
-                            <rect className="tooltip">
-                                <text className="tooltip-date"></text>
-                                <text className="tooltip-temp"></text>
-                            </rect>
+                            <rect className="tooltip"></rect>
+                            <text className="tooltip-date"></text>
+                            <text className="tooltip-temp"></text>
                         </g>
                         <rect className="overlay" id="overlay" fill="none" pointer-events="all"></rect>
                     </g>
