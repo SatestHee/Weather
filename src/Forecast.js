@@ -39,7 +39,7 @@ function Forecast() {
     }, [params.latitude, params.longitude, params.units])
     return (
         <div >
-            <div className="card forecast">
+            <main className="card forecast">
                 <header>5 Day Forecast</header>
                 <ul >
                     {lists.map(day => {
@@ -59,7 +59,7 @@ function Forecast() {
                         </li>)
                     })}
                 </ul>
-            </div >
+            </main >
             <DailyData.Provider value={{ hourlylists, params }}>
                 <DailyChart />
             </DailyData.Provider>

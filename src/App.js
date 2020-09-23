@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import dayjs from 'dayjs';
 import Forecast from './Forecast';
+import Footer from './Footer';
 import './App.css';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -116,7 +117,7 @@ function App() {
               <div className="weather-details-container">
 
                 <div className="weather-details-listItem">
-                  <PriorityHighIcon/>
+                  <PriorityHighIcon />
                   <div className="weather-details-title">
                     High/Low</div>
                   <div className="weather-details-data">
@@ -124,28 +125,28 @@ function App() {
                   </div>
                 </div>
                 <div className="weather-details-listItem">
-               <ClearAllIcon/>
+                  <ClearAllIcon />
                   <div className="weather-details-title"> Wind </div>
                   <div className="weather-details-data">
                     <span>{weather.wind} km/h</span>
                   </div>
                 </div>
                 <div className="weather-details-listItem">
-                <OpacityIcon /> 
+                  <OpacityIcon />
                   <div className="weather-details-title">Humidity</div>
                   <div className="weather-details-data">
                     <span>{weather.humidity} %</span>
                   </div>
                 </div>
                 <div className="weather-details-listItem">
-                  <ImportExportIcon/>
+                  <ImportExportIcon />
                   <div className="weather-details-title">Pressure</div>
                   <div className="weather-details-data">
                     <span>{weather.pressure} mb</span>
                   </div>
                 </div>
                 <div className="weather-details-listItem">
-                  <WbSunnyOutlinedIcon/>
+                  <WbSunnyOutlinedIcon />
                   <div className="weather-details-title">Sunrise</div>
                   <div className="weather-details-data">
                     <span>{dayjs.unix(weather.sunrise).format("hh:mm a")}</span>
@@ -165,7 +166,7 @@ function App() {
           </div>
           <Forecast></Forecast>
         </div>
-
+        <Footer></Footer>
       </div>
 
     </ForecastContext.Provider>
