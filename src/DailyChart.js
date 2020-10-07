@@ -17,8 +17,9 @@ function DailyChart() {
         // Extract the width and height that was computed by CSS.
         const svgWidth = chartDiv.clientWidth;
         const svgHeight = chartDiv.clientHeight;
-        svg.attr("width", 600)
-            .attr("height", 400)
+        console.log('svg',[svgWidth,svgHeight])
+        svg.attr("width", svgWidth - 40)
+            .attr("height", svgHeight)
             .attr("overflow", "visible");
 
         //set margin left & top
@@ -26,8 +27,10 @@ function DailyChart() {
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-        const width = 600 - margin.left - margin.right;
-        const height = 400 - margin.top - margin.bottom;
+        let width = svgWidth - margin.left - margin.right;
+        let height = svgHeight - margin.top - margin.bottom;
+
+
         lists.forEach(day => {
             day.dt = new Date(day.dt * 1000)
         });
@@ -102,10 +105,10 @@ function DailyChart() {
         drawChart()
     }, [lists])
     return (
-        <div className="card">
+        <div className="card" id='chart'>
             <div className="hourly_chart">
                 <div className="title">Next 48 Hour Weather</div >
-                <div id='chart'>
+                <div >
                     <svg ref={ref}>
                         <g id="g">
                             <g id="x"></g>

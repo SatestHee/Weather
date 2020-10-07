@@ -95,6 +95,19 @@ input:focus {
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, .2);
 }
 
+@media screen and (max-width: 600px){
+  .card {
+    display: flex;
+    margin: 1rem;
+    padding: 4px;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid #e5e5e5;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, .2);
+  }
+}
 /*First Card */
 
 .current {
