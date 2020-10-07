@@ -39,7 +39,7 @@ function App() {
   useEffect(() => {
     if (geolocation.longitude === null || geolocation.latitude === null) {
       //Get Current Location by Callback function
-      navigator.geolocation.getCurrentPosition(currentPosition => {
+      navigator.geolocation.watchPosition(currentPosition => {
         setGeolocation({
           longitude: currentPosition.coords.longitude,
           latitude: currentPosition.coords.latitude
