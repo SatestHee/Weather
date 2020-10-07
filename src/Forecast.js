@@ -16,8 +16,8 @@ function Forecast() {
     var getForecast = async () => {
         try {
             const res = await axios.get(forcastUrl)
-            res.data.daily.splice(4, 3)
-            setLists(res.data.daily)
+           const lists= res.data.daily.slice(0, 5)
+            setLists(lists)
             setHourlylists(res.data.hourly)
         } catch (error) {
             setError(error)

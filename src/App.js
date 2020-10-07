@@ -36,8 +36,24 @@ function App() {
     sunset: '--',
   });
 
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${geolocation.latitude}&lon=${geolocation.longitude}&units=${units}&appid=7f87ab11fbe404bb51f3e91e4f43251e`
+  useEffect(() => {
+    if (geolocation.longitude === null || geolocation.latitude === null) {
+      //Get Current Location by Callback function
+      navigator.geolocation.getCurrentPosition(currentPosition => {
+        setGeolocation({
+          longitude: currentPosition.coords.longitude,
+          latitude: currentPosition.coords.latitude
+        })
+      })
+    } else {
+      getWeather()
 
+    }
+
+
+  }, [geolocation, units])
+
+  const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${geolocation.latitude}&lon=${geolocation.longitude}&units=${units}&appid=7f87ab11fbe404bb51f3e91e4f43251e`
   const getWeather = async () => {
     try {
       const res = await axios.get(weatherUrl)
@@ -61,20 +77,6 @@ function App() {
       setError(error)
     }
   }
-
-  useEffect(() => {
-    if (geolocation.longitude === null || geolocation.latitude === null) {
-      //Get Current Location by Callback function
-      navigator.geolocation.getCurrentPosition(currentPosition => {
-        setGeolocation({
-          longitude: currentPosition.coords.longitude,
-          latitude: currentPosition.coords.latitude
-        })
-      })
-    }
-    getWeather()
-
-  }, [geolocation, units])
 
   const handleConverter = (e) => {
     setUnits(e.target.id)
@@ -100,8 +102,6 @@ function App() {
       setSearchValue(placeName)
 
     })
-
-    // return () => window.removeEventListener('place_changed', autocomplete);
 
   }
   const parseInt = (temp) => {

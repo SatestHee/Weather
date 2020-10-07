@@ -19,6 +19,18 @@ a:hover, a:active {
   font-size: 1.25rem;
 }
 
+@media screen and (max-width: 600px) {
+  .container {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 14px;
+  }
+}
+
 /* Header */
 
 nav {
@@ -95,7 +107,7 @@ input:focus {
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, .2);
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 600px) {
   .card {
     display: flex;
     margin: 1rem;
@@ -108,6 +120,7 @@ input:focus {
     box-shadow: 0 0 12px 0 rgba(0, 0, 0, .2);
   }
 }
+
 /*First Card */
 
 .current {
@@ -130,6 +143,15 @@ input:focus {
   font-weight: 600;
   padding: 0;
   margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .tempature {
+    font-size: 40px;
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .details {
@@ -175,6 +197,7 @@ input:focus {
 
 .forecast ul {
   display: flex;
+  flex-direction: row;
   padding: 0;
   margin: 0;
   flex-wrap: wrap;
@@ -190,9 +213,36 @@ input:focus {
   align-items: center;
 }
 
+@media screen and (max-width: 600px) {
+  .forecast ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+  }
+  .forecast .grid {
+    border-bottom: 1px solid #dedede;
+    margin: 10px;
+    padding: 0;
+    flex-basis: 40%;
+    align-items: flex-start;
+  }
+}
+
 .forecast-icon {
   width: 50px;
   height: 50px;
+}
+
+.forecast-date {
+  font-size: 10px;
+}
+
+.forecast-tempature {
+  font-weight: 600;
+}
+
+.description {
+  font-size: 10px;
 }
 
 .hourly_chart {

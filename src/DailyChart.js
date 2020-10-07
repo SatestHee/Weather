@@ -10,14 +10,13 @@ function DailyChart() {
     const units = data.params.units === 'metric' ? '°C' : '°F'
     let drawChart = () => {
         const svg = d3.select(ref.current)
-        const margin = { top: 20, right: 20, bottom: 40, left: 60 }
+        const margin = { top: 20, right: 20, bottom: 20, left: 30 }
 
         //set svg
         let chartDiv = document.getElementById("chart");
         // Extract the width and height that was computed by CSS.
         const svgWidth = chartDiv.clientWidth;
         const svgHeight = chartDiv.clientHeight;
-        console.log('svg',[svgWidth,svgHeight])
         svg.attr("width", svgWidth - 40)
             .attr("height", svgHeight)
             .attr("overflow", "visible");
@@ -38,9 +37,11 @@ function DailyChart() {
         const x = d3.scaleTime()
             .domain(d3.extent(lists, d => d.dt))
             .range([0, width])
+
         svg.select('#x')
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
+
         //YAxis
         const y = d3.scaleLinear()
             .domain([d3.min(lists, d => d.temp), d3.max(lists, d => d.temp)])
