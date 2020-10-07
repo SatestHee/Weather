@@ -2,15 +2,21 @@ import * as d3 from 'd3';
 import React, { useContext, useEffect, useRef } from 'react';
 import { DailyData } from './Forecast'
 import dayjs from 'dayjs'
+
 function DailyChart() {
     const ref = useRef()
     const data = useContext(DailyData)
-    var lists = data.hourlylists
+    let lists = data.hourlylists
     const units = data.params.units === 'metric' ? '°C' : '°F'
-    var drawChart = () => {
+    let drawChart = () => {
         const svg = d3.select(ref.current)
         const margin = { top: 20, right: 20, bottom: 40, left: 60 }
+
         //set svg
+        let chartDiv = document.getElementById("chart");
+        // Extract the width and height that was computed by CSS.
+        const svgWidth = chartDiv.clientWidth;
+        const svgHeight = chartDiv.clientHeight;
         svg.attr("width", 600)
             .attr("height", 400)
             .attr("overflow", "visible");
@@ -34,7 +40,7 @@ function DailyChart() {
             .call(d3.axisBottom(x))
         //YAxis
         const y = d3.scaleLinear()
-            .domain([20, d3.max(lists, d => d.temp)])
+            .domain([d3.min(lists, d => d.temp), d3.max(lists, d => d.temp)])
             .range([height, 0]);
         svg.select('#y')
             .call(d3.axisLeft(y));
@@ -87,34 +93,36 @@ function DailyChart() {
             focus.select(".tooltip-date")
                 .text(dayjs(a).format("ddd, MMM D h:mm A"))
             focus.select(".tooltip-temp")
-                .text('Tempature: ' + b + units)
+                .text('Tempature: ' + Math.floor(b) + units)
         }
     }
-
 
     useEffect(() => {
         //init Chart
         drawChart()
     }, [lists])
     return (
-        <div>
-            <header>Next 48 Hour Weather</header>
-            <div id='chart'>
-                <svg ref={ref}>
-                    <g id="g">
-                        <g id="x"></g>
-                        <g id="y"></g>
-                        <path id="path"></path>
-                        <g className="focus" id="focus" style={{ display: "none" }}>
-                            <circle r="5" id="dot"></circle>
-                            <rect className="tooltip"></rect>
-                            <text className="tooltip-date"></text>
-                            <text className="tooltip-temp"></text>
+        <div className="card">
+            <div className="hourly_chart">
+                <div className="title">Next 48 Hour Weather</div >
+                <div id='chart'>
+                    <svg ref={ref}>
+                        <g id="g">
+                            <g id="x"></g>
+                            <g id="y"></g>
+                            <path id="path"></path>
+                            <g className="focus" id="focus" style={{ display: "none" }}>
+                                <circle r="5" id="dot"></circle>
+                                <rect className="tooltip"></rect>
+                                <text className="tooltip-date"></text>
+                                <text className="tooltip-temp"></text>
+                            </g>
+                            <rect className="overlay" id="overlay" fill="none" pointerEvents="all"></rect>
                         </g>
-                        <rect className="overlay" id="overlay" fill="none" pointer-events="all"></rect>
-                    </g>
-                </svg>
+                    </svg>
+                </div>
             </div>
+
         </div>
 
 
